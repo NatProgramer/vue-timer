@@ -15,7 +15,6 @@ import TimerItem from './components/TimerItem.vue';
     days: "00"
   });
   
-  let actualDate = new Date();
   let finalDate = new Date(2024, 3, 7);
   
   const calculateSeconds = () => {
@@ -60,6 +59,7 @@ import TimerItem from './components/TimerItem.vue';
   }
   
   let calculateDays = (seconds: string, minutes: string, hours: string) => {
+    let actuaDate = new Date();
     let dateDiference = finalDate.getTime() - actualDate.getTime();
     let days = `${Math.floor(dateDiference / 1000 / 60 / 60 / 24)}`;
 
