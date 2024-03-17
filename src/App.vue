@@ -82,7 +82,7 @@ import { ref } from 'vue';
 
 <template>
   <main>
-    <h1><span>diegPS</span> ban counter</h1>
+    <h1><span>diegPS</span> ban timer</h1>
     <article>
       <p>{{counter.days}}</p>
       <p>{{counter.hours}}</p>
