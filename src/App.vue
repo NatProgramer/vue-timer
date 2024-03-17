@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
+import TimerItem from './components/TimerItem.vue';
   interface Time {
     seconds: string,
     minutes: string,
@@ -84,10 +84,10 @@ import { ref } from 'vue';
   <main>
     <h1><span>diegPS</span> ban timer</h1>
     <article>
-      <p>{{counter.days}}</p>
-      <p>{{counter.hours}}</p>
-      <p>{{counter.minutes}}</p>
-      <p>{{counter.seconds}}</p>
+        <TimerItem timeName="Days":time="counter.days" />
+        <TimerItem timeName="Hours" :time="counter.hours" />
+        <TimerItem timeName="Minutes" :time="counter.minutes" />
+        <TimerItem timeName="Seconds" :time="counter.seconds" />
   </article>
   </main>
 </template>
@@ -112,14 +112,5 @@ import { ref } from 'vue';
   article {
     display: flex;
     gap: 15px;
-  }
-
-  article p {
-    margin: 0;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 45px;
-    font-weight: 600;
-    background: #181818;
   }
 </style>
