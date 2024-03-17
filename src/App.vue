@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import TimerItem from './components/TimerItem.vue';
+
   interface Time {
     seconds: string,
     minutes: string,
@@ -59,8 +60,8 @@ import TimerItem from './components/TimerItem.vue';
   }
   
   let calculateDays = (seconds: string, minutes: string, hours: string) => {
-    let actuaDate = new Date();
-    let dateDiference = finalDate.getTime() - actualDate.getTime();
+    let now = new Date();
+    let dateDiference = finalDate.getTime() - now.getTime();
     let days = `${Math.floor(dateDiference / 1000 / 60 / 60 / 24)}`;
 
     if (parseInt(days) < 10) {
