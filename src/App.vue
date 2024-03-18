@@ -83,7 +83,7 @@ import TimerItem from './components/TimerItem.vue';
 
 <template>
   <main>
-    <h1><span>diegPS</span> ban timer</h1>
+    <h1><span>DiegPS</span> ban timer</h1>
     <article>
         <TimerItem timeName="Days":time="counter.days" />
         <TimerItem timeName="Hours" :time="counter.hours" />
