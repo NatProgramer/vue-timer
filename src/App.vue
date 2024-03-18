@@ -76,6 +76,13 @@ import TimerItem from './components/TimerItem.vue';
     }
   }
 
+  if (
+      counter.value.days == "00" && 
+      counter.value.hours == "00" && 
+      counter.value.minutes == "00" && 
+      counter.value.seconds == "00"
+    ) { calculateSeconds() }
+
   setInterval(() => {
     calculateSeconds()
   }, 1000)
