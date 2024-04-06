@@ -11,7 +11,6 @@ pnpm install # or pnpm i
 #### Start develop server
 ```bash
 pnpm run dev
-   
 ```
 
 Start coding!
