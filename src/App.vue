@@ -16,76 +16,29 @@ let counter = ref<Time>({
     days: "00"
 });
 
-let finalDate = new Date(Date.UTC(2024, 3, 8, 2, 55));
+let finalDate: number = new Date("April 8, 2024 02:30:00 UTC").getTime();
 
+function calculateTimeLeft() {
+  let now: number = new Date().getTime();
 
-const calculateSeconds = () => {
-    let now = new Date();
-    let nowUTC = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()));
-    let seconds = `${Math.floor(59 - nowUTC.getSeconds())}`;
+  let dateDiference = finalDate - now;
 
-    if (parseInt(seconds) < 10) {
-        seconds = `0${seconds}`
-    }
+  let days = Math.floor(dateDiference / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((dateDiference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((dateDiference % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((dateDiference % (1000 * 60)) / 1000);
 
-    return calculateMinutes(seconds, nowUTC)
+  counter.value = {
+    days: days < 10 ? `0${days}` : `${days}`,
+    hours: hours < 10 ? `0${hours}` : `${hours}`,
+    minutes: minutes < 10 ? `0${minutes}` : `${minutes}`,
+    seconds: seconds < 10 ? `0${seconds}` : `${seconds}`,
+  }
+
+  setTimeout(calculateTimeLeft, 1000);
 }
 
-const calculateMinutes = (seconds: string, now: Date) => {
-
-    let finalMinute = new Date();
-    finalMinute.setHours(now.getHours(), 59, 59, 999);
-
-    let minutes = `${Math.floor((finalMinute.getTime() - now.getTime()) / 1000 / 60)}`;
-
-    if (parseInt(minutes) < 10) {
-        minutes = `0${minutes}`
-    }
-
-    return calculateHours(seconds, minutes, now)
-};
-
-const calculateHours = (seconds: string, minutes: string, now: Date) => {
-    let finalHour = new Date();
-    finalHour.setHours(23, 59, 59, 999);
-
-    let hours = `${Math.floor((finalHour.getTime() - now.getTime()) / 1000 / 60 / 60)}`;
-
-    if (parseInt(hours) < 10) {
-        hours = `0${hours}`
-    }
-
-    return calculateDays(seconds, minutes, hours, now)
-}
-
-let calculateDays = (seconds: string, minutes: string, hours: string, now: Date) => {
-    let dateDiference = finalDate.getTime() - now.getTime();
-    let days = `${Math.floor(dateDiference / 1000 / 60 / 60 / 24)}`;
-
-    if (parseInt(days) < 10) {
-        days = `0${days}`
-    }
-
-    counter.value = {
-        seconds,
-        minutes,
-        hours,
-        days,
-    }
-}
-
-if (
-    counter.value.days == "00" &&
-    counter.value.hours == "00" &&
-    counter.value.minutes == "00" &&
-    counter.value.seconds == "00"
-) {
-    calculateSeconds()
-}
-
-setInterval(() => {
-    calculateSeconds()
-}, 1000)
+calculateTimeLeft();
 </script>
 
 <template>
