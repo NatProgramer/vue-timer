@@ -34,7 +34,8 @@ const calculateSeconds = () => {
 
 const calculateMinutes = (seconds: string, now: Date) => {
 
-    let finalMinute = new Date();
+    let finalMinuteLocal = new Date();
+    let finalMinute = new Date(finalMinuteLocal.getTime())
     finalMinute.setHours(now.getHours(), 59, 59, 999);
 
     let minutes = `${Math.floor((finalMinute.getTime() - now.getTime()) / 1000 / 60)}`;
@@ -47,7 +48,8 @@ const calculateMinutes = (seconds: string, now: Date) => {
 };
 
 const calculateHours = (seconds: string, minutes: string, now: Date) => {
-    let finalHour = new Date();
+    let finalHourLocal = new Date();
+    let finalHour = new Date(finalHourLocal.getTime())
     finalHour.setHours(23, 59, 59, 999);
 
     let hours = `${Math.floor((finalHour.getTime() - now.getTime()) / 1000 / 60 / 60)}`;
