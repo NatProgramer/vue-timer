@@ -21,7 +21,7 @@ let hasConfettiStarted = ref<boolean>(false)
 
 const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-let finalDate: number = new Date("April 8, 2024 02:30:00 UTC").getTime();
+let finalDate: number = new Date("April 8, 2024 04:30:00 UTC").getTime();
 
 
 function randomInRange(min: number, max: number) {
