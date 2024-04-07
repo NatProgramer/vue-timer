@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {ref} from 'vue';
+import { ref } from 'vue';
 import TimerItem from './components/TimerItem.vue';
+import confetti from "canvas-confetti"
 
 interface Time {
     seconds: string,
@@ -16,26 +17,52 @@ let counter = ref<Time>({
     days: "00"
 });
 
+let hasConfettiStarted = ref<boolean>(false)
+
+const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
 let finalDate: number = new Date("April 8, 2024 02:30:00 UTC").getTime();
 
+
+function randomInRange(min: number, max: number) {
+    return Math.random() * (max - min) + min;
+}
+
+function createConfetti() {
+    confetti({ ...defaults, particleCount: 50, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+    confetti({ ...defaults, particleCount: 50, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+}
+
+function formatDate(date: number) {
+    if (date < 0) {
+        return "00"
+    }
+    return date.toString().padStart(2, "0")
+}
+
 function calculateTimeLeft() {
-  let now: number = new Date().getTime();
+    let now: number = new Date().getTime();
 
-  let dateDiference = finalDate - now;
+    let dateDiference = finalDate - now;
 
-  let days = Math.floor(dateDiference / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((dateDiference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((dateDiference % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((dateDiference % (1000 * 60)) / 1000);
+    if (dateDiference < 0 && hasConfettiStarted.value === false) {
+        hasConfettiStarted.value = true
+        setInterval(createConfetti, 650)
+    }
 
-  counter.value = {
-    days: days < 10 ? `0${days}` : `${days}`,
-    hours: hours < 10 ? `0${hours}` : `${hours}`,
-    minutes: minutes < 10 ? `0${minutes}` : `${minutes}`,
-    seconds: seconds < 10 ? `0${seconds}` : `${seconds}`,
-  }
+    let days = Math.floor(dateDiference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((dateDiference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((dateDiference % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((dateDiference % (1000 * 60)) / 1000);
 
-  setTimeout(calculateTimeLeft, 1000);
+    counter.value = {
+        days: formatDate(days),
+        hours: formatDate(hours),
+        minutes: formatDate(minutes),
+        seconds: formatDate(seconds),
+    }
+
+    setTimeout(calculateTimeLeft, 1000);
 }
 
 calculateTimeLeft();
