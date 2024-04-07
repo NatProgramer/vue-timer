@@ -20,15 +20,16 @@ let finalDate = new Date(Date.UTC(2024, 3, 8, 2, 55));
 
 
 const calculateSeconds = () => {
-    let now = new Date();
-    let nowUTC = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()));
-    let seconds = `${Math.floor(59 - nowUTC.getSeconds())}`;
+    let nowLocal = new Date();
+    let now = new Date(nowLocal.getTime());
+
+    let seconds = `${Math.floor(59 - now.getSeconds())}`;
 
     if (parseInt(seconds) < 10) {
         seconds = `0${seconds}`
     }
 
-    return calculateMinutes(seconds, nowUTC)
+    return calculateMinutes(seconds, now)
 }
 
 const calculateMinutes = (seconds: string, now: Date) => {
